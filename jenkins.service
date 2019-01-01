@@ -1,0 +1,10 @@
+[Unit]
+Description=Jenkins service
+
+[Service]
+ExecStart=/bin/bash -c 'source /vagrant/setenv.sh && /usr/local/bin/jenkins.sh'
+User=jenkins
+Group=jenkins
+
+[Install]
+WantedBy=multi-user.target
