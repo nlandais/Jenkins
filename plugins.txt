@@ -72,3 +72,4 @@ handlebars:latest
 lockable-resources:latest
 pipeline-model-definition:latest
 workflow-aggregator:latest
+job-dsl:latest
