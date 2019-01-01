@@ -44,5 +44,9 @@ cp /vagrant/plugins.sh /usr/local/bin/plugins.sh
 cp /vagrant/install-plugins.sh /usr/local/bin/install-plugins.sh
 cp /vagrant/plugins.txt /usr/share/jenkins/ref/plugins.txt
 xargs /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
+
+# Create seed job
+mkdir -p /usr/share/jenkins/ref/jobs/seed-job
+seedJob.xml /usr/share/jenkins/ref/jobs/seed-job/config.xml
 sleep 10
 systemctl start jenkins
