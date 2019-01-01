@@ -1,4 +1,5 @@
-pipelineJob('example') {
+def pipelineName = 'example'
+pipelineJob(pipelineName) {
     definition {
         cps {
             script(readFileFromWorkspace('Jenkinsfile'))
@@ -6,3 +7,4 @@ pipelineJob('example') {
         }
     }
 }
+queue(pipelineName)
