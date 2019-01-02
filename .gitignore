@@ -1,2 +1,5 @@
 */.vagrant
 *.log
+.terraform
+*.tfstate*
+*-nic*
