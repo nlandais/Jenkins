@@ -2,13 +2,15 @@
 <img src="https://jenkins.io/sites/default/files/jenkins_logo.png"/>
 This repo contains various means to spin up a Jenkins server either on Docker or
 on a VM spun up with Vagrant + VirtualBox.
-Once the server is provisioned, use admin for username and password (don't
-to disbale the initial account and create your own username/passwd to secure
+Once the server is provisioned, use admin for username and password (immediately
+disable the initial account and create your own username/passwd to secure
 the instance)
-As part of the initialization process, a seed job using the JOB-DSL plugin will
+
+
+Note: As part of the initialization process, a seed job using the JOB-DSL plugin will
 be created to generate a sample pipeline. To protect against execution of
-malicious scripts, the seed job will fail unless the groovy script run by the
-job is first approved from the [In-script approval page] (https://jenkins.io/doc/book/managing/script-approval/) 
+malicious scripts, the seed job will fail until the groovy script run by the
+job is first approved from the [In-script approval page] (https://jenkins.io/doc/book/managing/script-approval/)
 
 # Usage
 
