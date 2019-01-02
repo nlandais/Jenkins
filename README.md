@@ -1,13 +1,20 @@
-# Jenkins Docker image running on Alpine
-The Jenkins Continuous Integration and Delivery server with some tweaks that work for me
-
+# Jenkins with Vagrant or Docker
 <img src="https://jenkins.io/sites/default/files/jenkins_logo.png"/>
-
+This repo contains various means to spin up a Jenkins server either on Docker or
+on a VM spun up with Vagrant + VirtualBox.
+Once the server is provisioned, use admin for username and password (don't
+to disbale the initial account and create your own username/passwd to secure
+the instance)
+As part of the initialization process, a seed job using the JOB-DSL plugin will
+be created to generate a sample pipeline. To protect against execution of
+malicious scripts, the seed job will fail unless the groovy script run by the
+job is first approved from the [In-script approval page] (https://jenkins.io/doc/book/managing/script-approval/) 
 
 # Usage
 
 ```
-docker run -p 8080:8080 -p 50000:50000 jenkins/jenkins:lts
+docker build -t <name:version> .
+docker run -p 8080:8080 -p 50000:50000 <name:version>
 ```
 
 NOTE: read below the _build executors_ part for the role of the `50000` port mapping.
@@ -16,7 +23,7 @@ This will store the workspace in /var/jenkins_home. All Jenkins data lives in th
 You will probably want to make that an explicit volume so you can manage it and attach to another container for upgrades :
 
 ```
-docker run -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts
+docker run -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home <name:version>
 ```
 
 this will automatically create a 'jenkins_home' [docker volume](https://docs.docker.com/storage/volumes/) on the host machine, that will survive the container stop/restart/deletion.
@@ -24,7 +31,7 @@ this will automatically create a 'jenkins_home' [docker volume](https://docs.doc
 NOTE: Avoid using a [bind mount](https://docs.docker.com/storage/bind-mounts/) from a folder on the host machine into `/var/jenkins_home`, as this might result in file permission issues (the user used inside the container might not have rights to the folder on the host machine). If you _really_ need to bind mount jenkins_home, ensure that the directory on the host is accessible by the jenkins user inside the container (jenkins user - uid 1000) or use `-u some_other_user` parameter with `docker run`.
 
 ```
-docker run -d -v jenkins_home:/var/jenkins_home -p 8080:8080 -p 50000:50000 jenkins/jenkins:lts
+docker run -d -v jenkins_home:/var/jenkins_home -p 8080:8080 -p 50000:50000 <name:version>
 ```
 
 this will run Jenkins in detached mode with port forwarding and volume added. You can access logs with command 'docker logs CONTAINER_ID' in order to check first login token. ID of container will be returned from output of command above.
