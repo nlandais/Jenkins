@@ -10,7 +10,7 @@ the instance)
 Note: As part of the initialization process, a seed job using the JOB-DSL plugin will
 be created to generate a sample pipeline. To protect against execution of
 malicious scripts, the seed job will fail until the groovy script run by the
-job is first approved from the [In-script approval page] (https://jenkins.io/doc/book/managing/script-approval/)
+job is first approved from the [In-script approval page](https://jenkins.io/doc/book/managing/script-approval/)
 
 # Usage
 
