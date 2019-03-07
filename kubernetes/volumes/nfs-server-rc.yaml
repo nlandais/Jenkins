@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nfs-server
+spec:
+  replicas: 1
+  selector:
+    role: nfs-server
+  template:
+    metadata:
+      labels:
+        role: nfs-server
+    spec:
+      containers:
+      - name: nfs-server
+        image: gcr.io/udacity-training-233019/volume-nfs:with-jenkins-chown
+        ports:
+          - name: nfs
+            containerPort: 2049
+          - name: mountd
+            containerPort: 20048
+          - name: rpcbind
+            containerPort: 111
+        securityContext:
+          privileged: true
+        volumeMounts:
+          - mountPath: /exports
+            name: jenkins-pvc
+      volumes:
+        - name: jenkins-pvc
+          persistentVolumeClaim:
+            claimName: nfs-server-pvc

@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jenkins
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jenkins
+        track: stable
+    spec:
+      volumes:
+        - name: jenkins-master-shared-storage
+          persistentVolumeClaim:
+            claimName: nfs-volume-jenkins-home-claim
+      containers:
+        - name: jenkins
+          image: "gcr.io/udacity-training-233019/jenkins:latest"
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: jenkins-master-shared-storage
+              mountPath: /var/jenkins_home

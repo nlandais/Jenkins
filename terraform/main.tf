@@ -5,7 +5,7 @@ provider "aws" {
 
 # Our default security group to access
 # the instances over SSH and HTTP
-resource "aws_security_group" "default" {
+resource "aws_security_group" "jenkins" {
   name        = "jenkins"
   description = "Used to secure the Jenkins instance"
   vpc_id      = "${var.aws_vpc}"
