@@ -13,9 +13,8 @@ variable "aws_region" {
   description = "AWS region to launch servers."
   default     = "us-east-1"
 }
-
+# export TF_VAR_my_ip=`(dig +short myip.opendns.com @resolver1.opendns.com)`
 variable "my_ip" {
-  default = "<redacted>"
 }
 
 variable "aws_vpc" {

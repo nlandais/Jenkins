@@ -15,21 +15,21 @@ resource "aws_security_group" "jenkins" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${var.my_ip}"]
+    cidr_blocks = ["${var.my_ip}/32"]
   }
 
   ingress {
     from_port   = 2222
     to_port     = 2222
     protocol    = "tcp"
-    cidr_blocks = ["${var.my_ip}"]
+    cidr_blocks = ["${var.my_ip}/32"]
   }
 
   ingress {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = ["${var.my_ip}"]
+    cidr_blocks = ["${var.my_ip}/32"]
   }
 
   # outbound internet access
@@ -56,7 +56,7 @@ resource "aws_instance" "jenkins" {
   ami = "${lookup(var.aws_amis, var.aws_region)}"
   key_name = "${var.ssh_key_id}"
   # Our Security group to allow HTTP and SSH access
-  vpc_security_group_ids = ["${aws_security_group.default.id}"]
+  vpc_security_group_ids = ["${aws_security_group.jenkins.id}"]
   subnet_id = "${var.aws_subnet}"
 
   # Provisioner the instance and run admin/install tasks.
