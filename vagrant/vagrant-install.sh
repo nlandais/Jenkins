@@ -6,14 +6,14 @@ http_port=8080
 source /vagrant/setenv.sh
 
 # jenkins version being installed
-JENKINS_VERSION="${JENKINS_VERSION:-2.156}"
+JENKINS_VERSION="${JENKINS_VERSION:-2.164.2}"
 # jenkins.war checksum, download will be validated using it
-JENKINS_SHA=f68d2d930118cd731ad7b35c16a6482205c0be17a99a380065b0f6c729f5736a
+JENKINS_SHA=c851b603e3d320295eed671fde7c661209645c818da9b7564caee8371e52bede
 # Can be used to customize where jenkins.war get downloaded from
 JENKINS_URL="https://repo.jenkins-ci.org/public/org/jenkins-ci/main/jenkins-war/${JENKINS_VERSION}/jenkins-war-${JENKINS_VERSION}.war"
 
 apt-get update
-apt-get upgrade -y
+# apt-get upgrade -y
 apt-get install -y git openssh-client curl unzip bash ttf-dejavu coreutils
 
 addgroup $group
@@ -35,6 +35,7 @@ curl -fsSL ${JENKINS_URL} -o /usr/share/jenkins/jenkins.war \
 chown -R ${user}:${group} "$JENKINS_HOME" /usr/share/jenkins
 
 cp /vagrant/jenkins-support /usr/local/bin/jenkins-support
+cp /vagrant/setenv.sh /usr/share/jenkins/setenv.sh
 cp /vagrant/jenkins.sh /usr/local/bin/jenkins.sh
 chmod u+x /usr/local/bin/jenkins.sh
 cp /vagrant/jenkins.service /etc/systemd/system
@@ -47,6 +48,6 @@ xargs /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
 
 # Create seed job
 mkdir -p /usr/share/jenkins/ref/jobs/seed-job
-seedJob.xml /usr/share/jenkins/ref/jobs/seed-job/config.xml
+cp /vagrant/seedJob.xml /usr/share/jenkins/ref/jobs/seed-job/config.xml
 sleep 10
 systemctl start jenkins
